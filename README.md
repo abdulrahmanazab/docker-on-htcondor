@@ -72,10 +72,15 @@ Submitting job(s).
 CentOS Linux release 7.3.1611 (Core)
 ```
 # Condor Docker job with mounted volumes
-
+* Create directories for input/output volumes
+```bash
+[user@machine ~]$ mkdir docker_in
+[user@machine ~]$ echo hello! > docker_in/infile
+[user@machine ~]$ mkdir docker_out
+```
 * Configure Condor to mount volumes on Docker images, as root:
 ```bash
-cat > /etc/condor/config.d/docker
+[user@machine ~]$ sudo cat > /etc/condor/config.d/docker
 #Define volumes to mount:
 DOCKER_VOLUMES = DOCKER_IN, DOCKER_OUT
 
@@ -85,6 +90,25 @@ DOCKER_VOLUME_DIR_DOCKER_OUT = /home/user/docker_out:/output:rw
 
 #Configure those volumes to be mounted on each Docker container:
 DOCKER_MOUNT_VOLUMES = DOCKER_IN, DOCKER_OUT
+ctrl+D
+```
+* Create the submission script and submit the job
+```bash
+[user@machine ~]$ cat > docker_volumes_job.sub
+universe = docker
+docker_image = centos
+executable = cp
+arguments = /input/infile /output/outfile
+output = docker_volumes_job.out
+error = docker_volumes_job.err
+queue
+ctrl+D
+
+[user@machine ~]$ condor_submit docker_volumes_job.sub
+Submitting job(s).
+1 job(s) submitted to cluster 7.
+[user@machine ~]$ cat docker_out/outfile
+hello!
 ```
 Installation for CentOS 7
 --------------------------
