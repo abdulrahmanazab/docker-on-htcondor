@@ -71,6 +71,21 @@ Submitting job(s).
 [user@machine ~]$ cat docker_job.out
 CentOS Linux release 7.3.1611 (Core)
 ```
+# Condor Docker job with mounted volumes
+
+* Configure Condor to mount volumes on Docker images, as root:
+```bash
+cat > /etc/condor/config.d/docker
+#Define volumes to mount:
+DOCKER_VOLUMES = DOCKER_IN, DOCKER_OUT
+
+#Define a mount point for each volume:
+DOCKER_VOLUME_DIR_DOCKER_IN = /home/user/docker_in:/input:ro
+DOCKER_VOLUME_DIR_DOCKER_OUT = /home/user/docker_out:/output:rw
+
+#Configure those volumes to be mounted on each Docker container:
+DOCKER_MOUNT_VOLUMES = DOCKER_IN, DOCKER_OUT
+```
 Installation for CentOS 7
 --------------------------
 
