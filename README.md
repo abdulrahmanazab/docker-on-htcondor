@@ -38,6 +38,39 @@ Submitting job(s).
 [user@machine ~]$ cat job.out
 Sun Jan 22 11:05:40 UTC 2017
 ```
+* Submit a simple Docker job to Condor:
+```bash
+[user@machine ~]$ cat > docker_job.sub
+universe = docker
+docker_image = centos
+executable = cat
+arguments = /etc/system-release
+output = docker_job.out
+error = docker_job.err
+queue
+ctrl+D
+
+[user@machine ~]$ condor_submit docker_job.sub
+Submitting job(s).
+1 job(s) submitted to cluster 2.
+[user@machine ~]$ condor_q
+
+
+-- Schedd: condor-docker.novalocal : <192.168.1.121:20790?...
+ ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD
+   2.0   cloud-user      1/22 11:17   0+00:00:00 I  0   0.0  cat /etc/system-re
+
+1 jobs; 0 completed, 0 removed, 1 idle, 0 running, 0 held, 0 suspended
+[user@machine ~]$ condor_q
+
+
+-- Schedd: condor-docker.novalocal : <192.168.1.121:20790?...
+ ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD
+
+0 jobs; 0 completed, 0 removed, 0 idle, 0 running, 0 held, 0 suspended
+[user@machine ~]$ cat docker_job.out
+CentOS Linux release 7.3.1611 (Core)
+```
 Installation for CentOS 7
 --------------------------
 
