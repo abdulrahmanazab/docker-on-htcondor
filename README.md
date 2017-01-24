@@ -118,6 +118,13 @@ Installation for CentOS 7
 * All condor logs are in ``/var/log/condor/``
 * All condor config files ``/etc/condor/``
 
+Useful for trouble-shooting
+----------------------------
+* When some nodes don't appear in ``condor_status``, check ``/var/log/condor/CollectorLog``
+* When submitted jobs are stuck in ``I`` or ``H`` state, check  ``/var/log/condor/NegotiatorLog``
+
 Useful links
 -------------
+ * [Useful implementation report from CERN](https://github.com/abdulrahmanazab/docker-on-htcondor/blob/master/CERN_summer_student_report_Nawel_Medjkoune_2016.pdf)
  * [Condor security](http://research.cs.wisc.edu/htcondor/manual/v8.2/3_6Security.html)
+ 
