@@ -43,7 +43,7 @@ Sun Jan 22 11:05:40 UTC 2017
 [user@machine ~]$ cat > docker_job.sub
 universe = docker
 docker_image = centos
-executable = cat
+executable = /bin/cat
 arguments = /etc/system-release
 output = docker_job.out
 error = docker_job.err
@@ -97,7 +97,7 @@ ctrl+D
 [user@machine ~]$ cat > docker_volumes_job.sub
 universe = docker
 docker_image = centos
-executable = cp
+executable = /bin/cp
 arguments = /input/infile /output/outfile
 output = docker_volumes_job.out
 error = docker_volumes_job.err
